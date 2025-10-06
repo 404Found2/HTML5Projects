@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        * {
+  font-family: Arial;
+  margin: 0px;
+  padding: 0px;
+  font-size: 18px;
+}
+ #main {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 200px auto !important;
+  grid-template-rows: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+#side {
+  height: 100vh;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  background: #DDD;
+  display: flex;
+  flex-direction: column;
+  overflow-y:scroll;
+  overflow-x: hidden;
+}
+
+.project {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+
+.project:hover {
+  background:#BBB; 
+}
+.title {
+  font-size: bold;
+}
+
+.date {
+  font-size: 10px;
+}
+
+.des {
+  font-size: 15px;
+  text-wrap: wrap;
+  width: 100%;
+}
+
+#site {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  width: 100%;
+  height: 100%;
+}
+
+#navbar {
+  width: 100%;
+  background: #A7C7E7;
+  height: 35px;
+}
+
+#tab {
+  font-size: 18px;
+  background: white;
+  width: 150px;
+  height: 20px;
+  padding: 5px;
+  transform: translate(5px, 5px);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  text-overflow: ellipsis ellipsis !important;
+}
+
+#searchbar {
+  border-bottom: 2px solid #eee;
+  width: 100%;
+  height: 35px;
+ }
+
+ #content {
+    width: 100%;
+    height: calc(100% - 65px);
+    overflow-y: scroll;
+    border: 0px solid white !important;
+ }
+
+#searchbar p {
+  width: calc(100% - 15px);
+  background: #A7C7E7;
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transform: translate(5px, 6px);
+}
+    </style>
+<body id="main">    
+    <div id="side">
+    
+  </div>
+  <div id="site">
+    <div id="navbar">
+      <p id="tab"> Website on ...</p>
+    </div>
+    <div id="searchbar"><p id="bar-content">select an option</p></div>
+    <iframe id="content" src="">
+      
+    </iframe>
+  </div>
+  <script>
+    class project {
+    constructor(name, day, description, url) {
+        this.title = name;
+        this.date = day;
+        this.des = description;
+        this.url = url;
+    }
+}
+
+arr = [new project("Calculator", "Unknown Date", "A simple calculator using HTML, CSS and JS", "./calculator.html"), new project("Quote Generator", "Unknown Date", "An exporation of CSS transitions through a random quote generator.", "./quotegen.html"), new project("Fake Blog Post", "Unknown Date", "A Spanish blog prototype for a IB Spanish Project", "./article.html")]
+
+var s = "";
+
+for(var i = 0; i < arr.length; i++) {
+    s += `<div class="project" onclick="updatepage('${arr[i].title}');">
+      <div class="title">${arr[i].title}</div>
+      <div class="date">${arr[i].date}</div>
+      <div class="des">${arr[i].title}</div>
+    </div>`
+}
+
+document.getElementById("side").innerHTML = s;
+
+function updatepage(value) {
+    console.log(value);
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].title == value) {
+            var header = arr[i].title;
+            if(arr[i].title.length > 14) {
+                header = arr[i].title.substring(0, 10) + "...";
+            }
+            document.getElementById("tab").innerText = header;
+            document.getElementById("bar-content").innerText = "http://127.0.0.1:3000"+ arr[i].url.substring(1);
+            document.getElementById("content").src = arr[i].url;
+        }
+    }
+}
+
+  </script>
+</body>
+</html>

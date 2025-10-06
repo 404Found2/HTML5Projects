@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<body>
+    <style>@import url('https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap');
+
+#quote-box {
+  width: 700px;
+  height: 330px;
+  background: white;
+  border-radius: 15px;
+  position: relative;
+  }
+
+body {
+  transition: 1.2s;
+  display: flex;
+  font-size: 37px;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0px;
+  background: teal;
+  padding: 0px;
+  font-family: "News Cycle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.quote {
+  color: teal;
+  font-size: 90px;
+  margin: 10px;
+  float: left;
+  position: absolute;
+}
+
+#text {
+  top: 50px;
+  right: -15px;
+  position: absolute;
+  width: calc(100% - 50px);
+}
+
+#author {
+  font-size: 37px;
+  top: 170px;
+  right: 50px;
+  text-align: right;
+  position: absolute;
+  width: calc(100% - 50px);
+}
+
+#new-quote {
+  top: 250px;
+  left: 500px;
+  font-size: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  background: teal;
+  position: absolute;
+  border-radius: 10px;
+  color: white;
+  border: 0px;
+}
+
+#tweet-quote {
+  top: 250px;
+  left: 50px;
+  font-size: 24px;
+  padding: 10px;
+  text-decoration: none;
+  box-sizing: border-box;
+  background: teal;
+  position: absolute;
+  border-radius: 10px;
+  color: white;
+  font-family: monospace;
+}
+
+</style>
+<script src="https://kit.fontawesome.com/8dc5063b50.js" crossorigin="anonymous"></script>
+<div id="quote-box">
+  <em class="quote" id="mark">“</em>
+  <div id="text">Certain things catch your eye, but pursue only those that capture the heart.</div>
+  <div id="author">- Ancient Indian Proverb</div>
+  <button id="new-quote">New Quote</button>
+  <a id="tweet-quote" href="twitter.com/intent/tweet" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+</div>
+<script>
+    const data = [["Life is like riding a bicycle. To keep your balance, you must keep moving.", "- Albert Einstein"], ["Certain things catch your eye, but pursue only those that capture the heart.", "- Ancient Indian Proverb"],["Genius is one percent inspiration and ninety-nine percent perspiration.", "- Thomas Edison"]];
+
+    const colors = ["teal", "red", "darkorange", "green", "fushsia", "purple"];
+
+    document.getElementById("new-quote").addEventListener("click", random);
+
+    var text = document.getElementById("text")
+    var person = document.getElementById("author")
+
+    function random() {
+  var index = Math.floor(Math.random() * data.length);
+  var color = Math.floor(Math.random() * colors.length);
+ 
+  text.innerText = data[index][0];
+  person.innerText = data[index][1];
+  
+  document.getElementById("new-quote").style.backgroundColor = colors[color];
+  document.getElementById("tweet-quote").style.backgroundColor = colors[color];
+  document.getElementById("mark").style.color = colors[color];
+  document.querySelector("body").style.backgroundColor = colors[color];
+  
+    }
+</script>
+
+</body>

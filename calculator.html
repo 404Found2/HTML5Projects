@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<style>
+    body {
+  margin: 0px;
+  padding: 0px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightblue;
+}
+
+#calculator {
+  width: 300px;
+  height: 430px;
+  background-color: #00072D;
+  color: white;
+  display: grid;
+  grid-template-areas: "screen"
+                       "pad";
+}
+#screen {
+  width: 100%;
+  grid-area: screen;
+}
+
+#display {
+  font-size: 50px;
+  padding-top: 19px;
+  padding-right: 15px;
+  text-align: right;
+  font-family: Arial;
+}
+
+#equation {
+  padding-top: 10px;
+  text-align: right;
+  font-family: Arial;
+  font-size: 18px;
+  padding-right: 15px;
+}
+
+#pad {
+  grid-area: pad;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  display: grid;
+  grid-template-areas: "cl cl di mu"
+                       "se ei ni su"
+                       "fo fi si ad"
+                       "on tw th eq"
+                       "ze ze de eq";
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  font-family: Arial;
+  align-items: center;
+  justify-content: center;
+}
+
+#clear {
+  grid-area: cl;
+}
+#divide {
+  grid-area: di;
+}
+#multiply {
+  grid-area: mu;
+}
+
+
+#seven {
+  grid-area: se;
+}
+#eight {
+  grid-area: ei;
+}
+#nine {
+  grid-area: ni;
+}
+#subtract {
+  grid-area: su;
+}
+
+
+#four {
+  grid-area: fo;
+}
+#five {
+  grid-area: fi;
+}
+#six {
+  grid-area: si;
+}
+#add {
+  grid-area: ad;
+}
+
+
+#one {
+  grid-area: on;
+}
+#two {
+  grid-area: tw;
+}
+#three {
+  grid-area: th;
+}
+#equals {
+  grid-area: eq;
+}
+
+#zero {
+  grid-area:ze;
+}
+#decimal {
+  grid-area: de;
+}
+
+.btn.teal {
+  background: #48CAE4;
+}
+
+.btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #87878750;
+  font-size: 28px;
+  display: inline-block;
+}
+
+
+.op-teal {
+  color: #48CAE4;
+}
+</style>
+<body>
+    <div id="calculator">
+  <div id="screen">
+    <div id="display">0
+    </div>
+    <div id="equation">0</div>
+  </div>
+  <div id="pad">
+    <div class="btn teal twoH" id="clear">AC</div>
+    <div class="btn teal" id="divide">/</div>
+    <div class="btn teal" id="multiply">×</div>
+
+    <div class="btn" id="seven">7</div>
+    <div class="btn" id="eight">8</div>
+    <div class="btn" id="nine">9</div>
+    <div class="btn teal" id="subtract">–</div>
+
+    <div class="btn" id="four">4</div>
+    <div class="btn" id="five">5</div>
+    <div class="btn" id="six">6</div>
+    <div class="btn teal" id="add">+</div>
+
+    <div class="btn" id="one">1</div>
+    <div class="btn" id="two">2</div>
+    <div class="btn" id="three">3</div>
+    <div class="btn teal" id="equals">=</div>
+
+    <div class="btn" id="zero">0</div>
+    <div class="btn" id="decimal">.</div>
+  </div>
+</div>
+
+<script>
+    var string = "";
+var currentNum = "";
+var lastOp = "plus";
+
+display = document.querySelector("#display");
+equation = document.querySelector("#equation");
+
+document.getElementById("clear").addEventListener("click", cleared);
+
+function cleared() {
+  string = "";
+  currentNum = "";
+  lastOp = "plus";
+  lastOp = null;
+
+  display.innerHTML = currentNum + "0";
+  equation.innerHTML = string + "0";
+}
+
+document.getElementById("one").addEventListener("click", one);
+document.getElementById("two").addEventListener("click", two);
+document.getElementById("three").addEventListener("click", three);
+
+document.getElementById("four").addEventListener("click", four);
+document.getElementById("five").addEventListener("click", five);
+document.getElementById("six").addEventListener("click", six);
+
+document.getElementById("seven").addEventListener("click", seven);
+document.getElementById("eight").addEventListener("click", eight);
+document.getElementById("nine").addEventListener("click", nine);
+
+function digit(num) {
+  if (currentNum.charAt(0) == "0") {
+    currentNum = "";
+    string = string.substring(0, string.length - 1);
+  }
+  currentNum += num;
+  string += num;
+  display.innerHTML = currentNum;
+  equation.innerHTML = string;
+}
+
+function one() {
+  digit(1);
+}
+function two() {
+  digit(2);
+}
+function three() {
+  digit(3);
+}
+
+function four() {
+  digit(4);
+}
+function five() {
+  digit(5);
+}
+function six() {
+  digit(6);
+}
+
+function seven() {
+  digit(7);
+}
+function eight() {
+  digit(8);
+}
+function nine() {
+  digit(9);
+}
+
+document.getElementById("divide").addEventListener("click", divide);
+document.getElementById("multiply").addEventListener("click", multiply);
+document.getElementById("subtract").addEventListener("click", subtract);
+document.getElementById("add").addEventListener("click", add);
+
+function operatorCheck() {
+  
+    if (
+    string
+      .substring(string.length - 32, string.length)
+      .indexOf(" <span class='op-teal'>+</span>") == 0 ||
+    string
+      .substring(string.length - 32, string.length)
+      .indexOf(" <span class='op-teal'>-</span>")  == 0 ||
+    string
+      .substring(string.length - 32, string.length)
+      .indexOf(" <span class='op-teal'>/</span>")  == 0 ||
+    string
+      .substring(string.length - 32, string.length)
+      .indexOf(" <span class='op-teal'>×</span>")  == 0 ||
+    string
+      .substring(string.length - 32, string.length)
+      .indexOf(" <span class='op-teal'>=</span>") == 0) {
+    return true;
+  }
+}
+
+function add() {
+  if(operatorCheck()) {
+    string = string.substring(0, string.length - 32);
+  }
+  string += " <span class='op-teal'>+</span> ";
+  currentNum = "";
+  equation.innerHTML = string;
+}
+function subtract() {
+  if(operatorCheck()) {
+    if(currentNum.charAt(0) == "-") 
+    {
+      currentNum = currentNum.substring(currentNum.indexOf("-") + 1);
+    } else {
+      currentNum = "-" + currentNum;
+      string += "-";
+      display.innerHTML = currentNum;
+      equation.innerHTML = string;
+    }
+  } else {
+   string += " <span class='op-teal'>-</span> ";
+   currentNum = "";
+   equation.innerHTML = string;
+ 
+  }
+}
+
+function divide() {
+  if(operatorCheck()) {
+    string = string.substring(0, string.length - 32);
+  }
+  string += " <span class='op-teal'>/</span> ";
+  currentNum = "";
+  equation.innerHTML = string;
+}
+function multiply() {
+  if(operatorCheck()) {
+    string = string.substring(0, string.length - 32);
+  }
+  string += " <span class='op-teal'>×</span> ";
+  currentNum = "";
+  equation.innerHTML = string;
+}
+
+document.getElementById("equals").addEventListener("click", equals);
+function equals() {
+  if(operatorCheck()) {
+    string = string.substring(0, string.length - 32);
+  }
+  var mod = string;
+  string += " <span class='op-teal'>=</span>";
+  var total = Number(mod.substring(0, mod.indexOf(" ")));
+  mod = mod.substring(mod.indexOf(" "));
+  var lastOp = "plus";
+  var num2;
+
+  while (mod.indexOf(" ") > -1) {
+    mod = mod.substring(mod.indexOf(" "));
+    if (mod.indexOf(" <span class='op-teal'>+</span> ") == 0) {
+      lastOp = "plus";
+    } else if (mod.indexOf(" <span class='op-teal'>-</span> ") == 0) {
+      lastOp = "minus";
+    } else if (mod.indexOf(" <span class='op-teal'>/</span> ") == 0) {
+      lastOp = "divide";
+    } else if (mod.indexOf(" <span class='op-teal'>×</span> ") == 0) {
+      lastOp = "multiply";
+    }
+    mod = mod.substring(mod.indexOf(" ") + 1);
+    mod = mod.substring(mod.indexOf(" ") + 1);
+    mod = mod.substring(mod.indexOf(" ") + 1);
+    if (mod.indexOf(" ") > -1) {
+      num2 = Number(mod.substring(0, mod.indexOf(" ")));
+    } else {
+      num2 = Number(mod.substring(0));
+    }
+    console.log("string: " + mod);
+    console.log("totalOld: " + total);
+    console.log("lastOp: " + lastOp);
+    console.log("num2: " + num2);
+    total = performOp(total, lastOp, num2);
+    console.log("total: " + total);
+  }
+  display.innerHTML = Math.round(total * 100000) / 100000;
+  equation.innerHTML = string;
+
+  currentNum = total;
+  string = "" + currentNum;
+}
+
+function performOp(a, op, b) {
+  switch (op) {
+    case "plus":
+      return a + b;
+    case "minus":
+      return a - b;
+    case "multiply":
+      return a * b;
+    case "divide":
+      return a / b;
+  }
+}
+
+document.getElementById("zero").addEventListener("click", zero);
+document.getElementById("decimal").addEventListener("click", decimal);
+
+function zero() {
+  if (currentNum.charAt(0) !== "0") {
+    digit(0);
+  }
+}
+
+function decimal() {
+  if (currentNum.indexOf(".") <= -1) {
+    digit(".");
+  }
+}
+
+</script>
+</body>
